@@ -3,6 +3,12 @@
 import uuid
 from datetime import datetime
 
+time = "%Y-%m-%dT%H:%M:%S.%f"
+
+if models.storage_t == "db":
+    Base = declarative_base()
+else:
+    Base = object
 
 class BaseModel:
     """A base class for all hbnb models"""
@@ -42,3 +48,7 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
+
+     def delete(self):
+        """delete the current instance from the storage"""
+        models.storage.delete(self)
